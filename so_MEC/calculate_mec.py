@@ -5,7 +5,6 @@ import numpy
 import pickle
 import math
 import numpy as np
-import pylab as pl
 import os
 from util_mec import *
 
@@ -34,7 +33,7 @@ def get_MECscores(answers_att, users, tag):
     index = 0
     userranklists = []
     if os.path.exists("temp_files/userranklists_"+tag+".pik"):
-        userranklists = loadfile("userranklists_"+tag+".pik")
+        userranklists = loadfile("userranklists_"+tag)
     else:
         for qid in qids:
             index += 1
@@ -52,7 +51,7 @@ def get_MECscores(answers_att, users, tag):
             qids[qid] = len(urank)
             userranklists.append(urank)
 
-        dumpfile(userranklists, "userranklists_"+tag+".pik", "w")
+        dumpfile(userranklists, "userranklists_"+tag)
 
     allqstlen = []
     for urank in userranklists:
@@ -82,8 +81,8 @@ def get_MECscores(answers_att, users, tag):
             if userset[u]>=1:
                 experts[u] = userset[u]
 
-    dumpfile(experts, "experts_"+tag+".pik")
-    dumpfile(userset, "MECscores_"+tag+".pik")
+    dumpfile(experts, "experts_"+tag)
+    dumpfile(userset, "MECscores_"+tag)
     
     return experts, userset
 

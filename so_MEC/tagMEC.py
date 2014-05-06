@@ -7,8 +7,8 @@ import numpy as np
 
 
 from calculate_mec import *
-from compare_performance import *
-from characterize_perference import *
+#from compare_performance import *
+#from characterize_perference import *
 from get_userAtt import *
 from util_mec import *
 
@@ -98,19 +98,19 @@ if __name__ == '__main__':
     tag = str(sys.argv[1])
     # get answerers and answer attributes
     if os.path.exists("temp_files/all_answerers.pik"):
-        all_answerers = loadfile("all_answerers.pik")
+        all_answerers = loadfile("all_answerers"+tag)
     else:
-        all_answerers = get_answerers()
+        all_answerers = get_answerers(tag)
     if os.path.exists("temp_files/answers_att_"+tag+".pik"):
-        answers_att = loadfile("answers_att_"+tag+".pik")
-        this_answerers = loadfile("answerers_"+tag+".pik")
+        answers_att = loadfile("answers_att_"+tag)
+        this_answerers = loadfile("answerers_"+tag)
     else:
         this_answerers, answers_att = get_answers_att(all_answerers, tag)
     
     # calculate MEC scores and get experts
     if os.path.exists("temp_files/experts_"+tag+".pik"):
-        answerer_scores = loadfile("MECscores_"+tag+".pik")
-        experts = loadfile("experts_"+tag+".pik")
+        answerer_scores = loadfile("MECscores_"+tag)
+        experts = loadfile("experts_"+tag)
     else:        
         experts, answerer_scores = get_MECscores(answers_att, this_answerers, tag)
     sys.exit(1)

@@ -12,11 +12,11 @@ cur = con.cursor()
 cur.execute('SELECT version()')
 ver = cur.fetchone()
 
-def get_answerers():
+def get_answerers(tag):
     cur.execute('select id from users')
     ids = cur.fetchall()
     ids = [x[0] for x in ids]
-    dumpfile(ids, "all_answerers")
+    dumpfile(ids, "all_answerers_"+tag)
     return ids
     
 def get_answers_att(users, tag):
@@ -34,8 +34,8 @@ def get_answers_att(users, tag):
                 if is_tag_in(tag, r[7]):
                     answers_att.append([r[0], r[1], r[2], r[3], r[4], r[5], r[6]])
                     answerers.add(u)
-    dumpfile(answerers, "answerers_"+tag+".pik")
-    dumpfile(answers_att, "answers_att_"+tag+".pik")
+    dumpfile(answerers, "answerers_"+tag)
+    dumpfile(answers_att, "answers_att_"+tag)
     return answerers, answers_att
 
 if __name__ == '__main__':

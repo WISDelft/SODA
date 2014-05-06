@@ -4,15 +4,11 @@ import sys
 import numpy
 import pickle
 import math
-import matplotlib
-import matplotlib.pyplot as plt
 import numpy as np
-import pylab as pl
 import os
-from matplotlib.patches import Ellipse
 
 con = None
-con = psycopg2.connect(database='sim_so', user='postgres', password='021709Yj')
+con = psycopg2.connect(database='stackquestionstest', user='postgres', password='021709Yj')
 cur = con.cursor()
 cur.execute('SELECT version()')
 ver = cur.fetchone()
