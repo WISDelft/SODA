@@ -30,3 +30,9 @@ def dumpfile(data, fname):
     f = open("temp_files/"+fname+".pik", 'w')
     pickle.dump(data, f)
     f.close()
+    
+def writeout(a, fname):
+    fout = open("data/"+fname+".csv", 'w')
+    for x in a:
+        fout.write(str(x)+"\n")
+    fout.close()
