@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Labels</key>
+	<string>Question Debatableness
+Answering Quality
+All Users
+Sparrows
+Mean Debatableness
+Mean Answering Quality
+All Users
+Sparrows
+</string>
+	<key>Text</key>
+	<string>Use the mask in each scatter to select a sub-set.
+</string>
+</dict>
+</plist>

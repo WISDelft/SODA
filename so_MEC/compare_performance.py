@@ -160,7 +160,7 @@ def get_motiv_scatter(experts, answerer_scores, tag):
     output = open("data/illustration.csv", 'w')
 
     for k in range(len(qd_s)):
-        print k
+        #print k
         if qd_s[k]<1:
             continue
         if aq_s[k]<0 or aq_s[k]>1:
@@ -193,7 +193,7 @@ def get_motiv_scatter(experts, answerer_scores, tag):
 def get_nrqst(answerer_scores,tag):
     nrqst = dict([])
     for u in answerer_scores:
-        cur.execute("select count(*) from sim_questions where owneruserid="+str(u))
+        cur.execute("select count(*) from questions where owneruserid="+str(u))
         result = cur.fetchone()
         if result!=None:
             nrqst[u] = result[0]

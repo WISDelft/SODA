@@ -1,3 +1,9 @@
+'''
+    TODO:
+        1. preference & temporal code cleaning
+        2. mec for individuals
+'''
+
 import string
 import psycopg2
 import sys
@@ -72,7 +78,8 @@ if __name__ == '__main__':
     sparrows = get_sparrows(tag)
     print "nr of experts: "+str(len(experts))+', nr of sparrows: '+str(len(sparrows))
     #get_motiv_example(experts, answers_att)                                           # table 2
-    get_motiv_scatter(experts, answerer_scores, tag)                             # figure 3
+    if not os.path.exists("data/illustration.csv"):
+        get_motiv_scatter(experts, answerer_scores, tag)                             # figure 3
     
     # get basic statistics
     get_performance(experts, answerer_scores, tag)                              # figure 6
