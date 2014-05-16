@@ -193,7 +193,7 @@ def get_motiv_scatter(experts, answerer_scores, tag):
 def get_nrqst(answerer_scores,tag):
     nrqst = dict([])
     for u in answerer_scores:
-        cur.execute("select count(*) from questions where owneruserid="+str(u))
+        cur.execute("select count(distinct qid) from sim_qa where qowneruserid="+str(u))
         result = cur.fetchone()
         if result!=None:
             nrqst[u] = result[0]
@@ -281,6 +281,9 @@ def get_performance(experts, answerer_scores, tag):
         output.write("overall, "+str(round(numpy.median(debate[u]), 2))+"\n")
     output.close()
     ################################################################################################################
+    if os.path.exists("temp_files/com_"+tag+".pik"):
+        comlook(tag)
+        return
     qlen = []
     for urank in userranklists:
         qlen.append(len(urank))
@@ -343,7 +346,6 @@ def get_performance(experts, answerer_scores, tag):
     '''for c in com:
         print com'''
 
-    f = open("com.pik", 'w')
     dumpfile(com, "com_"+tag)
     print 'com done!'
     comlook(tag)
@@ -377,8 +379,8 @@ def comlook(tag):
         print len(nmrrs)
         print i+1
         print '------'
-    output = open("datas/ans_quality.csv", 'w')
+    output = open("data/ans_quality.csv", 'w')
     for i in index:
-        output.write(str(i-1)+", "+str(nmrrs_mean[i])+", "+str(repus_mean[i])+"\n")
+        output.write(str(i-1)+", "+str(nmrrs_mean[i-1])+", "+str(repus_mean[i-1])+"\n")
     output.close()
 

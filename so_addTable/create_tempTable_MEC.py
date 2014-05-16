@@ -65,5 +65,9 @@ if __name__ == '__main__':
                     CREATE INDEX sim_qa_aowneruserid_index
                       ON sim_qa
                       USING btree
-                      (aowneruserid);''')
+                      (aowneruserid);
+                    CREATE INDEX sim_qa_qowneruserid_index
+                      ON sim_qa
+                      USING btree
+                      (qowneruserid);''')
     con.commit()
