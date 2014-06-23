@@ -85,4 +85,16 @@ def gene_df(qids):
             df2[d] = df1[d]
     #print len(df2)
     df = df2
-    dumpfile(df2, 'df_type')
+    dumpfile(df2, 'df_conf')
+    
+def gene_tps(qids):
+    tps = set()
+    for qid in qids:
+        cur.execute("select qtags from sim_qa where qid="+str(qid))
+        tags = cur.fetchall()[0][0]
+        if tags == None:
+            continue
+        tags = tags.split('|')
+        for t in tags:
+            tps.add(t)
+    dumpfile(list(tps), 'tps_conf')

@@ -10,6 +10,9 @@ import re
 import nltk
 from scipy import sparse
 import gensim
+from datetime import *  
+import time  
+
 bashCommand = "export PGHOST=localhost"
 os.system(bashCommand)
 con = None
@@ -142,6 +145,82 @@ def match_remove_link(text):
     return link_len, text
 
 '''====================================== below is the feature aggregation function =============================='''
+
+def rm_feature_term(qfeatures, term, df):
+    i = 0
+    for d in df:
+        if d==term:
+            print d
+            break
+        i += 1
+    
+    return numpy.delete(qfeatures,(i), axis=1)
+
+def add_feature(qid, qfeature, tps):
+    #topics
+    cur.execute("select qtags from sim_qa where qid="+str(qid))
+    tags = cur.fetchone()
+    if tags == None or len(tags)==0:
+        print '[warning] tags'
+        tags = []
+    elif tags[0] == None:
+        print '[warning] tags'
+        tags = []
+    else:
+        tags = tags[0].split('|')
+    
+    for t in tps:
+        if t in tags:
+            qfeature.append(1)
+        else:
+            qfeature.append(0)
+    
+    ##user past activities
+    cur.execute("select qowneruserid from sim_qa where qid="+str(qid))
+    u = cur.fetchone()
+    if u==None or len(u)==0:
+        qfeature.append(None)
+        u = None
+    elif u[0]==None:
+        qfeature.append(None)
+        u = None
+    else:
+        u=u[0]
+        cur.execute("select count(distinct qid) from sim_qa where qowneruserid="+str(u))
+        nrq = cur.fetchone()[0]
+        cur.execute("select count(distinct aid) from sim_qa where qowneruserid="+str(u))
+        nra = cur.fetchone()[0]
+        qfeature.append(nrq+nra)
+        
+    #knowledge
+    if u==None:
+        qfeature.append(None)
+    else:
+        cur.execute("select EXTRACT(day FROM sim_qa.qcreationdate-users.creationdate) from sim_qa, users where sim_qa.qid="+str(qid)+" and users.id=sim_qa.qowneruserid and users.id="+str(u))
+        result = cur.fetchone()
+        if result==None or len(result)==0:       
+            qfeautres.append(None)
+        day = result[0]
+        if day==None:
+            qfeature.append(None)
+        else:
+            qfeature.append(day)
+                
+    #temporal
+    cur.execute("select TO_CHAR(qcreationdate,'YYYY-MM-DD') from sim_qa where qid="+str(qid))
+    result = cur.fetchone()
+    if result==None or len(result)==0:
+        qfeature.append(None)
+    elif result[0]==None:
+        qfeature.append(None)
+    else:
+        year, month, day = result[0].split('-')
+        postdate = date(int(year), int(month), int(day))
+        basedate = date(2008,07,31)
+        timedelta = postdate-basedate
+        qfeature.append(timedelta.days)
+    
+    return qfeature
 
 def extract_one(qid, df):
     cur.execute("select text from closedquestionhistory_orign where postid="+str(qid)+" and posthistorytypeid=2")
@@ -327,14 +406,16 @@ def inds_in_metatag(tags):
             inds.append(meta_tag[mt])
     return inds
 
-def remove_feature(qfeatures):
+def remove_feature(qfeatures, df, tps):
     (m,n) = qfeatures.shape
     print '-- before remove --'
     print m
     print n
     #print len(allu)
     qfeature_sl = []
-    #worddict = dict([])
+    worddict = dict2list(df)
+    effective_df = []
+    effective_tps = []
     for j in range(n):
         if j%1000==0:
             print "processing the "+str(j)+"th column"
@@ -342,9 +423,15 @@ def remove_feature(qfeatures):
         if np.count_nonzero(qfeatures[:,j])>=10:
             this=list(qfeatures[:,j])
             qfeature_sl.append(this)
+            if j<len(df):
+                effective_df.append(worddict[j][0])
+            if j>=len(df) and j<len(df)+len(tps):
+                effective_tps.append(tps[j-len(df)])
             #worddict[allu[j]] = df2[allu[j]]
             #print qfeature_sl
     print np.array(qfeature_sl).shape
+    dumpfile(effective_df, 'effective_df')
+    dumpfile(effective_tps, 'effective_tps')
     #print len(worddict)
     print '-- end remove --'
     '''dictlist = dict2list(worddict)

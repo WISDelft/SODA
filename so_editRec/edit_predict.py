@@ -18,7 +18,7 @@ import scipy.io
 
 
 from util import *
-from label_extract import *
+#from label_extract import *
 from feature_extract import *
 from classification import *
 from tfidf import *
@@ -58,19 +58,20 @@ def get_label(part = 1):
 
 
 def load_label_gene(lun, type=0):
+    #STEP 1a  generate positive extreme set
     '''pos = loadfile_all('good_edit_ans_', [1,2,3,4,51,52,6,7,8,9,10])
     print len(pos)
     pos = get_most_edit(pos, 25406)
     dumpfile(pos, 'extreme_set')'''
     
     pos = loadfile_flat('extreme_set')
-    #output_samples(pos)
+    
     
     '''allqids = loadfile_flat('allqids')
         allqids = allqids[1:400000]+allqids[800001:1200000]
         random.shuffle(allqids)'''
     eqids = sorted(loadfile('ed_qst_ids'))
-    print 'hiiii'+str(len(eqids))
+    print 'len(edited qids):'+str(len(eqids))
     qids = []
     qlabels = dict([])
     print len(pos)
@@ -80,8 +81,9 @@ def load_label_gene(lun, type=0):
             qids.append(i)
             qlabels[i] = 1
     now_len = len(qids)
-    print now_len
+    print 'len(training positive) :'+str(now_len)
     
+    #STEP 1b generate sorted negative set
     '''auth=loadfile_flat('nrans')
     auth=dict2list(auth)
     random.shuffle(auth)
@@ -109,11 +111,12 @@ def load_label_gene(lun, type=0):
     print 'training nr: '+str(len(qids))
     train_len = len(qids)
     
+    # STEP 2a generate positive test set
     k = 0
     #pos = loadfile_flat('extreme_set')
-    #pos = loadfile_all('good_edit_ans_', [1,2,3,4,51,52,6,7,8,9,10])
-    random.shuffle(eqids)
-    for i in eqids:
+    pos = loadfile_all('good_edit_ans_', [1,2,3,4,51,52,6,7,8,9,10])
+    #random.shuffle(eqids)
+    for i in pos:
         #print i
         if bi_contains(qids, i) or check_date(i, '2013-01-01'):
             continue
@@ -126,25 +129,24 @@ def load_label_gene(lun, type=0):
     print k
     
     m = 0
-    allqids = loadfile('allqids')
-    random.shuffle(allqids)#3.
-    for i in allqids:
+    #allqids = loadfile('allqids')
+    #random.shuffle(allqids)#3.
+    for i in auth:
         #1,2, this = i[0]
-        this = i
-        #this = i[0]
+        this = i[0]
         if not bi_contains(qids,this) and (not check_date(this, '2013-01-01')) and not bi_contains(eqids, this):
             qids.append(this)
             qlabels[this] = 0
             m+=1
-            #if m==k:
-                #break
+            if m==k:
+                break
     print m
     print 'all nr: ' + str(len(qids))
     
     #random.shuffle(qids)
     
-    dumpfile(qids, 'tempqids_ambi')
-    dumpfile(qlabels, 'tempqlabels_ambi')
+    dumpfile(qids, 'tempqids_conf')
+    dumpfile(qlabels, 'tempqlabels_conf')
     return qids, qlabels, train_len
 
 
@@ -155,61 +157,54 @@ if __name__ == '__main__':
     rec = []
     f1 = []
     acc = []
-    i = 1
-    typeDict = {'code':2, 'description':3, 'detail':4, 'attempt':5}
-    qids = loadfile_flat('ed_type_qids_extreme')
-    for type in typeDict:
-        print type
-        ev = 2
-        qids = loadfile_flat('ed_type_qids_extreme_'+type)
-        qlabels = loadfile_flat('ed_type_label_extreme_'+type)
+    lun = 5
+        
+    for i in range(5):
+        load_label_gene(i)
+        qids = loadfile_flat('tempqids_conf')
+        qlabels = loadfile_flat('tempqlabels_conf')
         print len(qids)
+    
+        gene_df(qids)
+        gene_tps(qids)
+        features = []
+        labels = []
+        this_i = 0
+        df = loadfile_flat('df_conf')
+        print len(df)
+        tps = loadfile_flat('tps_conf')
+        print len(tps)
+        for qid in qids:
+            this_i += 1
+            if this_i%1000==0:
+                print '..[feature] processing the '+str(this_i)+"th question"
+            qfeature = extract_one(qid, df)
+            if isinstance(qfeature, int):
+                continue
+            
+            qfeature = add_feature(qid, qfeature, tps)
+            
+            features.append(qfeature)
+            labels.append(qlabels[qid])
+            
+        dumpfile(features, 'full_features_conf')
+        dumpfile(labels, 'full_labels_conf')
+        sys.exit(1)
+        features = np.array(features)
+        features = remove_feature(features, df, tps)
+        labels = np.array(labels)
+        np.save("temp_files/qfeatures_conf_newfeature.pik", features)
+        np.save("temp_files/qlabels_conf_newfeature.pik", labels)
+            
+        sys.exit(1)
+        p, r,f,ac = classify(35318)
+        pre.append(p)
+        rec.append(r)
+        f1.append(f)
+        acc.append(ac)
         
-        for i in range(5):
-            random.shuffle(qids)
-            pos_nr = 0
-            for q in qlabels:
-                if qlabels[q]==1:
-                    pos_nr += 1
-            while len(qids)>2*pos_nr:
-                ind = int(np.random.rand()*len(qids))
-                elem = qids[ind]
-                if qlabels[elem]!=1:
-                    qids.remove(elem)
-            
-            gene_df(qids)
-            
-            
-            features = []
-            labels = []
-            this_i = 0
-            df = loadfile_flat('df_type')
-            
-            for qid in qids:
-                this_i += 1
-                if this_i%1000==0:
-                    print '..[feature] processing the '+str(this_i)+"th question"
-                qfeature = extract_one2(qid, df, type, ev)
-                if isinstance( qfeature, int ):
-                    continue
-                features.append(qfeature)
-                labels.append(qlabels[qid])
-            
-            
-            features = np.array(features)
-            features = remove_feature(features)
-            labels = np.array(labels)
-            np.save("temp_files/qfeatures_type.pik", features)
-            np.save("temp_files/qlabels_type.pik", labels)
-            
-            p, r,f,ac = classify(35318)
-            pre.append(p)
-            rec.append(r)
-            f1.append(f)
-            acc.append(ac)
-        
-        
-        print "precision: "+str(np.mean(pre))+"+/-"+str(np.std(pre))
-        print "recall: "+str(np.mean(rec))+"+/-"+str(np.std(rec))
-        print "f1-score: "+str(np.mean(f1))+"+/-"+str(np.std(f1))
-        print "accuracy: "+str(np.mean(acc))+"+/-"+str(np.std(acc))
+    print "precision: "+str(np.mean(pre))+"+/-"+str(np.std(pre))
+    print "recall: "+str(np.mean(rec))+"+/-"+str(np.std(rec))
+    print "f1-score: "+str(np.mean(f1))+"+/-"+str(np.std(f1))
+    print "accuracy: "+str(np.mean(acc))+"+/-"+str(np.std(acc))
+    
