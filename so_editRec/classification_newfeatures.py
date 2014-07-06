@@ -29,9 +29,9 @@ from sklearn.decomposition import PCA
 from sklearn.decomposition import ProjectedGradientNMF
 
 from scipy.stats.mstats import mannwhitneyu
-import gensim
+#import gensim
 
-from util import *
+#from util import *
 
 schema = ['code_len', 'list_len', 'note_len', 'em_len', 'codeem_len', 'link_len', 'ask_len', 'explan_len', 'sent_len', "('to', 'add')", "('work', 'fine')", "('the', 'follow')", "('i', 'get')", "('a', 'string')", "('get', 'the')", "('know', 'how')", "('tri', 'to')", "('i', 'run')", "('i', 'use')", "('the', 'class')", '("\'m", \'use\')', "('in', 'java')", "('get', 'a')", "('pleas', 'help')", "('to', 'write')", "('seem', 'to')", "('help', 'me')", "('the', 'method')", "('a', 'lot')", "('i', 'tri')", "('so', 'far')", "('it', 'work')", "('the', 'first')", "('am', 'tri')", "('a', 'new')", "('it', 'doe')", "('doe', 'not')", '("\'m", \'tri\')', "('thank', 'you')", "('ani', 'help')", "('look', 'like')", "('ani', 'idea')", "('run', 'the')", "('is', 'thi')", "('in', 'thi')", "('with', 'thi')", "('give', 'me')", "('to', 'get')", "('make', 'a')", "('i', 'need')", "('a', 'method')", "('need', 'to')", "('the', 'code')", '(\'do\', "n\'t")', "('new', 'to')", "('lot', 'of')", "('thi', 'code')", "('to', 'find')", "('thi', 'is')"]#, 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12', 'f13', 'f14']
 
@@ -57,24 +57,40 @@ def expert_explore(qfeatures, labels, j):
     plt.show()
     fig.savefig('scatter.png')'''
 
+def coff_explore(coffs):
+    f=open("effective_df.pik", 'rb')
+    features = pickle.load(f)
+    print 'nr features:'+str(len(features))
+    f.close()
 
+    f=open("effective_tps.pik",'rb')
+    tmp = pickle.load(f)
+    f.close()
+
+    features.extend(tmp)
+
+    coffrank = []
+    for i in range(len(coffs)):
+        coffrank.append([coffs[i],i])
+    coffrank = sorted(coffrank, key = lambda coffrank : coffrank[0], reverse=True)
+    for i in range(10):
+        print features[coffrank[i][1]]+': '+str(coffrank[i][0])
+        print features[coffrank[-i][1]]+': '+str(coffrank[-i][0])
+    
 def classify(train_len=10000):
     train_len = 35318
-    qfeatures = numpy.load("temp_files/qfeatures_type_sec.pik.npy")
+    qfeatures = numpy.load("qfeatures_extr_newfeature.pik.npy")
     
-    corpus = gensim.matutils.Dense2Corpus(qfeatures.T)   
-    #corpus = gensim.matutils.Dense2Corpus(qfeatures.T)   
+    '''corpus = gensim.matutils.Dense2Corpus(qfeatures.T)
     #id2word = gensim.corpora.Dictionary.load_from_text('java_stats/dictionary')
     
     lsi = gensim.models.lsimodel.LsiModel(corpus=corpus,  num_topics=100)#id2word=id2word,
-    qfeatures = gensim.matutils.corpus2dense(lsi[corpus], len(lsi.projection.s)).T / lsi.projection.s
-
-    #qfeatures = numpy.column_stack([qfeatures_tmp,qfeatures[:,-1]])
+    qfeatures = gensim.matutils.corpus2dense(lsi[corpus], len(lsi.projection.s)).T / lsi.projection.s'''
     
     #lda = gensim.models.ldamodel.LdaModel(corpus=corpus, id2word=id2word, num_topics=100, update_every=0, passes=20)
     #qfeatures = gensim.matutils.corpus2dense(lsi[corpus])
     
-    labels = numpy.load("temp_files/qlabels_type_sec.pik.npy")
+    labels = numpy.load("qlabels_extr_newfeature.pik.npy")
 
     #expert_explore(qfeatures, labels, 7)
     #sys.exit(1)
@@ -88,27 +104,10 @@ def classify(train_len=10000):
             posnr += 1
     print "nr of editted questions: "+str(posnr)
     print "nr features: "+str(n)
-    '''imp = Imputer(missing_values='NaN', strategy='mean', axis=0)
+    imp = Imputer(missing_values='NaN', strategy='mean', axis=0)
     imp.fit(qfeatures)
-    qfeatures = imp.transform(qfeatures)'''
+    qfeatures = imp.transform(qfeatures)
 
-    '''a1=[]
-    a2=[]
-    
-    b1=[]
-    b2=[]
-    for i in range(m):
-        if labels[i] == 1:
-            a1.append(qfeatures[i][5])
-            a2.append(qfeatures[i][7])
-        else:
-            b1.append(qfeatures[i][5])
-            b2.append(qfeatures[i][7])
-    fig,ax = plt.subplots()
-
-    ax.scatter(b1,b2, color='blue')
-    ax.scatter(a1,a2, color='red')
-    plt.show()'''
 
 
     #qfeatures, schema_sl = select_feature(qfeatures, fset, [1, 4, 7, 10])
@@ -122,11 +121,13 @@ def classify(train_len=10000):
     qfeatures = preprocessing.scale(qfeatures)
     print qfeatures.shape
     
-    '''X_train, X_test = qfeatures[0:train_len], qfeatures[train_len:-1]
+    X_train, X_test = qfeatures[0:train_len], qfeatures[train_len:-1]
     y_train, y_test = labels[0:train_len], labels[train_len:-1]
-    clf = LogisticRegression(penalty='l1', tol=0.01, class_weight={1: 1})
+    clf = LogisticRegression(penalty='l1', tol=0.01, class_weight={1: 0.05})
         #clf = svm.SVC(kernel='linear', class_weight={1: 1})
     clf.fit(X_train, y_train)
+
+    #coff_explore(clf.coef_[0].tolist())
 
     y_pred = clf.predict(X_train)
     cm = confusion_matrix(y_train, y_pred)
@@ -140,10 +141,11 @@ def classify(train_len=10000):
     print 'test pre: '+str(precision_score(y_test,y_pred))
     print 'test rec: '+str(recall_score(y_test,y_pred))
     print 'test f1: '+str(f1_score(y_test,y_pred))
+    
     return precision_score(y_test,y_pred), recall_score(y_test,y_pred),f1_score(y_test,y_pred),accuracy_score(y_test, y_pred)
-    sys.exit(1)'''
+    sys.exit(1)
 
-    get_index = loadfile_flat('get_index_sec')
+    get_index = loadfile_flat('get_index')
     y_orn_true = []
     y_orn_pred = []
 
@@ -177,8 +179,8 @@ def classify(train_len=10000):
         X_train = selector.fit_transform(X_train, y_train)
         X_test = selector.transform(X_test)'''
 
-        #clf = LogisticRegression(penalty='l2', tol=0.01, class_weight={1:2.5})
-        clf = svm.SVC(kernel='linear', class_weight={1: 1.2})
+        clf = LogisticRegression(penalty='l1', tol=0.01, class_weight={1:0.28})
+        #clf = svm.SVC(kernel='linear', class_weight={1: 1})
         clf.fit(X_train, y_train)
         
         '''y_pred = clf.predict(X_train)

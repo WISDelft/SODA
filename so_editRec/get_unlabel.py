@@ -35,8 +35,7 @@ i = 0
 qids = []
 k = 0
 for qid in pos:
-    '''if pos[qid]==0:
-        continue'''
+ 
     i += 1
     if i%1000 ==0:
         print 'the '+str(i)+'th extreme question'
@@ -51,7 +50,7 @@ for qid in pos:
     tot = nltk.word_tokenize(orign_text)
     toe = nltk.word_tokenize(edit_texts[-1][0])
     
-    if 'code' in toe and 'code' not in tot:
+    if ('tri' in toe and 'tri' not in tot) or ('tried' in toe and 'tried' not in tot):
         k += 1
         #print '-----------------'
         #print qid
@@ -60,5 +59,5 @@ for qid in pos:
         #print edit_texts[-1][0]
     
 print k
-dumpfile(qids, 'augmented_code')
+dumpfile(qids, 'augmented_attempt')
     

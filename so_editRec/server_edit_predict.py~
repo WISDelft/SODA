@@ -1,0 +1,69 @@
+'''
+    changed files:
+        so_editRec
+        
+'''
+
+import string
+import sys
+import psycopg2
+import os
+import pickle
+import numpy as np
+import random
+import json
+from scipy import sparse
+import scipy.io
+
+from classification import *
+def loadfile_flat(fname):
+    f = open(fname+".pik")
+    data = pickle.load(f)
+    f.close()
+    return data
+if __name__ == '__main__':
+    #get_label(int(sys.argv[1]))
+    #sys.exit(1)
+    pre = []
+    rec = []
+    f1 = []
+    acc = []
+    lun = 5
+        
+    for i in range(5):
+        #load_label_gene(i)
+        qids = loadfile_flat('tempqids_extr')
+        qlabels = loadfile_flat('tempqlabels_extr')
+        print len(qids)
+    
+        #gene_df(qids)
+        #gene_tps(qids)
+        features = []
+        labels = []
+        this_i = 0
+        df = loadfile_flat('df')
+        print len(df)
+        tps = loadfile_flat('tps')
+        print len(tps)
+            
+        dumpfile(features, 'full_features_extr')
+        dumpfile(labels, 'full_labels_extr')
+        
+        features = np.array(features)
+        features = remove_feature(features, df, tps)
+        labels = np.array(labels)
+        np.save("qfeatures_extr_newfeature.pik", features)
+        np.save("qlabels_extr_newfeature.pik", labels)
+            
+        sys.exit(1)
+        p, r,f,ac = classify(35318)
+        pre.append(p)
+        rec.append(r)
+        f1.append(f)
+        acc.append(ac)
+        
+    print "precision: "+str(np.mean(pre))+"+/-"+str(np.std(pre))
+    print "recall: "+str(np.mean(rec))+"+/-"+str(np.std(rec))
+    print "f1-score: "+str(np.mean(f1))+"+/-"+str(np.std(f1))
+    print "accuracy: "+str(np.mean(acc))+"+/-"+str(np.std(acc))
+    

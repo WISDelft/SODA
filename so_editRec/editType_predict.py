@@ -16,6 +16,12 @@ from feature_extract import *
 from classification import *
 from tfidf import *
 
+'''settings:
+[24/06/14 11:29:07] luyuan: 1:1.2
+[24/06/14 11:29:21] luyuan: 1:1
+[24/06/14 11:29:25] luyuan: 1:1
+[24/06/14 11:29:28] luyuan: 1:0.08
+[24/06/14 11:29:34] luyuan: 1:0.28'''
 
 
 def get_part(vec, part):
@@ -141,6 +147,37 @@ def load_label_gene(lun, type=0):
     return qids, qlabels, train_len
 
 
+
+def neg_augment_extr(qids,qlabels, nr):
+    auth=loadfile_flat('sorted_nrans')
+    #extr = loadfile_flat('tempqlabels_extr')
+    eqids = sorted(loadfile('ed_qst_ids'))
+    k = 0
+    for i in auth:
+        if not bi_contains(eqids, i[0]) and i[0] not in qids:
+            qids.append(i[0])
+            qlabels[i[0]] = 0
+            k += 1
+        if k==nr:
+            break
+
+    return qids, qlabels
+    
+def neg_augment(qids,qlabels, nr):
+    extr = loadfile_flat('tempqlabels_extr')
+    extr = dict2list(extr)
+    random.shuffle(extr)
+    for i in range(nr):
+        flag=True
+        while flag:
+            ind = int(np.random.rand()*len(extr))
+            elem = extr[ind][0]
+            if elem not in qids and extr[ind][1]==0:
+                qids.append(elem)
+                qlabels[elem]=0
+                flag=False
+
+    return qids, qlabels
 if __name__ == '__main__':
     pre = []
     rec = []
@@ -148,7 +185,8 @@ if __name__ == '__main__':
     acc = []
     i = 1
     #typeDict = {'code':2, 'description':3, 'attempt':5} 
-    typeDict = {'attempt':5} 
+    #typeDict = {'code':2}
+    typeDict = {'description':3} 
     qids = loadfile_flat('ed_type_qids_extreme')
     
     for type in typeDict:
@@ -157,12 +195,14 @@ if __name__ == '__main__':
         if type=='attempt' or type=='code':
             augmented_qids = loadfile_flat('augmented_'+type)
         
-        for qid in augmented_qids:
+        '''for qid in augmented_qids:
             if qid in qids:
                 continue
             qlabels[qid] = 1
         qids = list(set(qids+augmented_qids))
-        print len(qids)
+        print len(qids)'''
+
+        qids, qlabels = neg_augment_extr(qids,qlabels, 84)
         
         random.shuffle(qids)
         
@@ -171,9 +211,9 @@ if __name__ == '__main__':
         for i in range(len(qids)):
             if qids[i] in orn:
                 get_index.append(i)
-        dumpfile(get_index, 'get_index')
+        dumpfile(get_index, 'get_index_sec')
                     
-        gene_df(qids)
+        #gene_df(qids)
                 
             
         features = []
@@ -188,15 +228,19 @@ if __name__ == '__main__':
             qfeature = extract_one(qid, df)
             if isinstance( qfeature, int ):
                 continue
+
+            #add hypothesis feature
+            #qfeature = add_feature4type(qid, qfeature)
+                
             features.append(qfeature)
             labels.append(qlabels[qid])
                 
                 
         features = np.array(features)
-        features = remove_feature(features)
+        features = remove_feature_type(features, '')
         labels = np.array(labels)
-        np.save("temp_files/qfeatures_type.pik", features)
-        np.save("temp_files/qlabels_type.pik", labels)
+        np.save("temp_files/qfeatures_type_sec.pik", features)
+        np.save("temp_files/qlabels_type_sec.pik", labels)
                 
         p, r,f,ac = classify()
         pre.append(p)

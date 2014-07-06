@@ -114,8 +114,9 @@ def load_label_gene(lun, type=0):
     # STEP 2a generate positive test set
     k = 0
     #pos = loadfile_flat('extreme_set')
-    pos = loadfile_all('good_edit_ans_', [1,2,3,4,51,52,6,7,8,9,10])
-    #random.shuffle(eqids)
+    #pos = loadfile_all('good_edit_ans_', [1,2,3,4,51,52,6,7,8,9,10])
+    pos = eqids
+    random.shuffle(eqids)
     for i in pos:
         #print i
         if bi_contains(qids, i) or check_date(i, '2013-01-01'):
@@ -124,16 +125,16 @@ def load_label_gene(lun, type=0):
             qids.append(i)
             qlabels[i] = 1
             k+=1
-        #if k==15000:
-            #break
+        if k==15000:
+            break
     print k
     
     m = 0
-    #allqids = loadfile('allqids')
-    #random.shuffle(allqids)#3.
-    for i in auth:
+    allqids = loadfile('allqids')
+    random.shuffle(allqids)#3.
+    for i in allqids:
         #1,2, this = i[0]
-        this = i[0]
+        this = i
         if not bi_contains(qids,this) and (not check_date(this, '2013-01-01')) and not bi_contains(eqids, this):
             qids.append(this)
             qlabels[this] = 0
@@ -145,8 +146,8 @@ def load_label_gene(lun, type=0):
     
     #random.shuffle(qids)
     
-    dumpfile(qids, 'tempqids_conf')
-    dumpfile(qlabels, 'tempqlabels_conf')
+    dumpfile(qids, 'tempqids_ambi')
+    dumpfile(qlabels, 'tempqlabels_ambi')
     return qids, qlabels, train_len
 
 
@@ -161,6 +162,7 @@ if __name__ == '__main__':
         
     for i in range(5):
         load_label_gene(i)
+        sys.exit(1)
         qids = loadfile_flat('tempqids_conf')
         qlabels = loadfile_flat('tempqlabels_conf')
         print len(qids)

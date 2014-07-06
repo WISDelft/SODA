@@ -156,6 +156,42 @@ def rm_feature_term(qfeatures, term, df):
     
     return numpy.delete(qfeatures,(i), axis=1)
 
+def add_feature4type(qid, qfeature):
+    ##user past activities
+    cur.execute("select qowneruserid from sim_qa where qid="+str(qid))
+    u = cur.fetchone()
+    if u==None or len(u)==0:
+        qfeature.append(None)
+        u = None
+    elif u[0]==None:
+        qfeature.append(None)
+        u = None
+    else:
+        u=u[0]
+        cur.execute("select count(distinct qid) from sim_qa where qowneruserid="+str(u))
+        nrq = cur.fetchone()[0]
+        cur.execute("select count(distinct aid) from sim_qa where qowneruserid="+str(u))
+        nra = cur.fetchone()[0]
+        qfeature.append(nrq+nra)
+        
+    '''#knowledge
+    if u==None:
+        qfeature.append(None)
+    else:
+        cur.execute("select EXTRACT(day FROM sim_qa.qcreationdate-users.creationdate) from sim_qa, users where sim_qa.qid="+str(qid)+" and users.id=sim_qa.qowneruserid and users.id="+str(u))
+        result = cur.fetchone()
+        if result==None or len(result)==0:       
+            qfeautres.append(None)
+        day = result[0]
+        if day==None:
+            qfeature.append(None)
+        else:
+            qfeature.append(day)'''
+                
+ 
+    return qfeature
+
+    
 def add_feature(qid, qfeature, tps):
     #topics
     cur.execute("select qtags from sim_qa where qid="+str(qid))
@@ -433,6 +469,42 @@ def remove_feature(qfeatures, df, tps):
     dumpfile(effective_df, 'effective_df')
     dumpfile(effective_tps, 'effective_tps')
     #print len(worddict)
+    print '-- end remove --'
+    '''dictlist = dict2list(worddict)
+    dictlist = sorted(dictlist, key=lambda dictlist : dictlist[1], reverse=True)
+    for d in dictlist:
+        dictionary.write(d[0]+','+str(d[1])+'\n')'''
+    return np.array(qfeature_sl).T
+
+def remove_feature_type(qfeatures, term=''):
+    (m,n) = qfeatures.shape
+    print '-- before remove --'
+    print m
+    print n
+    #print len(allu)
+    qfeature_sl = []
+    terms = term.split('|')
+    if term != '':
+        df = loadfile_flat('df_type')
+        i = 0
+        for t in df:
+            if t in terms:
+                break
+            i += 1
+        if i!=len(df):
+            qfeatures = np.delete(qfeatures, i, axis=1)
+            n -= 1
+    
+    for j in range(n):
+        if j%1000==0:
+            print "processing the "+str(j)+"th column"
+    
+        if np.count_nonzero(qfeatures[:,j])>=10:
+            this=list(qfeatures[:,j])
+            qfeature_sl.append(this)
+
+    print np.array(qfeature_sl).shape
+
     print '-- end remove --'
     '''dictlist = dict2list(worddict)
     dictlist = sorted(dictlist, key=lambda dictlist : dictlist[1], reverse=True)
