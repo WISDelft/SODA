@@ -14,7 +14,7 @@ import numpy as np
 
 from calculate_mec import *
 from compare_performance import *
-#from characterize_perference import *
+from characterize_perference import *
 from get_userAtt import *
 from util_mec import *
 
@@ -83,6 +83,10 @@ if __name__ == '__main__':
     
     # get basic statistics
     get_performance(experts, answerer_scores, tag)                              # figure 6
+    
+    # characterize performance
+    ansd_qst_properties(experts, sparrows, answerer_scores, tag)
+    post_qst_properties(experts, sparrows, answerer_scores, tag)
     
     
     #temp_cluster(users, experts, tag)

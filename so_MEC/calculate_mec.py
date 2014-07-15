@@ -21,11 +21,15 @@ def get_MECscores(answers_att, users, tag):
     qids = dict([])
     userset = dict([])
     nrqst = dict([])
+    au = dict([])
+    ds = dict([])
     for a in answers_att:
         qid = a[2]
         uid = a[0]
         qids[qid] = 0
         userset[uid] = 0
+        au[uid] = []
+        ds[uid] = []
         nrqst[uid] = 0
 
     # get partial ranking for each question
@@ -56,11 +60,13 @@ def get_MECscores(answers_att, users, tag):
     allqstlen = []
     for urank in userranklists:
         allqstlen.append(len(urank))
-    print 'mean NO.answerers to questions'+str( numpy.mean(allqstlen))
+    avgdt = numpy.mean(allqstlen)
+    print 'mean NO.answerers to questions: '+str(avgdt)
     '''qids store with qst length, userset store with their performance, and nrqst store with his qst number'''
     
     #calculate user expertise
     ss = []
+    
     for urank in userranklists:
         for i in range(len(urank)):
             pos = urank[i]
@@ -69,6 +75,8 @@ def get_MECscores(answers_att, users, tag):
             #print str((float(1)/(i+1)))+" "+str((len(urank)))+ " "+str((float(1)/(i+1))*(len(urank)))
             #userset[u] = userset[u] + (float(1)/(i+1))*(numpy.log2(len(urank)+1))
             userset[u] = userset[u] + (float(1)/(i+1))*(float(len(urank)))
+            au[u].append( (float(1)/(i+1)))
+            ds[u].append( len(urank) )
             nrqst[u] += 1
     #print numpy.mean(ss)
     #print numpy.std(ss)
@@ -81,6 +89,18 @@ def get_MECscores(answers_att, users, tag):
             if userset[u]>=1:
                 experts[u] = userset[u]
 
+    #Dealing with StackOverflow cirtique
+    results=[]
+    for u in userset:
+        results.append([u,userset[u],numpy.mean(au[u]), numpy.mean(ds[u]), avgdt, nrqst[u]])
+
+    results = sorted(results, key = lambda results : results[1])
+    f=open('temp_files/jieresult.csv','w')
+    for r in results:
+        f.write(str(r[0])+','+str(r[1])+','+str(r[2])+','+str(r[3])+','+str(r[4])+','+str(r[5])+'\n')
+    f.close()
+    sys.exit(1)
+    
     dumpfile(experts, "experts_"+tag)
     dumpfile(userset, "MECscores_"+tag)
     
