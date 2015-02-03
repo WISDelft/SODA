@@ -19,9 +19,23 @@ import sys
 
 location='/Users/jyang3/Projects/SODA/so_RQ/code/exploratory_analysis/'
 
-t_test_set = ['c#', 'asp.net-mvc', 'windows', 'oop', 'regex', 'assembly']
-#t_test_set = ['c#', 'asp.net-mvc']
-    
+#t_test_set = ['c#', 'asp.net-mvc', 'windows', 'oop', 'regex', 'assembly']
+t_test_set = ['c#', 'asp.net', '.net', 'vb.net', 'wcf',  #.NET
+                  'android', 'java', 'eclipse',  #Java
+                  'javascript', 'jquery', 'html', 'css', #Web 
+                  'php', 'mysql', 'arrays', 'apache', #LAMP
+                  'c', 'c++', 'windows', 'qt',  #C/C++
+                  'oop', 'image', 'performance', 'delphi', #OOP 
+                  'iphone', 'ios', 'objective-c',  #iOS
+                  'sql', 'sql-server', 'database',  #Databases
+                  'python', 'django', 'list',  #Python
+                  'ruby', 'ruby-on-rails',  #Ruby
+                  'regex', 'string', 'perl',  #Strings
+                  'asp.net-mvc', 'mvc',  #MVC
+                  'flex', 'flash', 'actionscript', #Adobe 
+                  'git', 'svn'] #SCM
+
+   
 def plot_distribution(property, fname, t):
     fig, ax = plt.subplots()
     #property.hist(ax=ax, bins=100, bottom=0.1)

@@ -317,8 +317,8 @@ def answerer_rec_using_trained_model_L2R(test_data, t_set, exp_dict_uid, exp_dic
                 alpha1 = alpha_default
                 alpha2 = alpha_default
                 if qt in model:
-                    alpha1 = model[qt][0][0]
-                    alpha2 = model[qt][0][1]
+                    alpha1 = model[qt][0]
+                    alpha2 = model[qt][1]
                 if u in qrec:
                     qrec[u] += alpha2*score
                 else:
@@ -649,9 +649,13 @@ def answerer_rec_train_L2R(test_data, t_set, exp_dict_uid, exp_dict_score, act_d
         if k%100 == 0:
             print '...'+str(k)+'th tag trained.'
         alphas_t = get_coefficient_L2R_per_tag(t, tag_dict[t], exp_dict_uid, exp_dict_score, act_dict)
-        if len(alphas_t) < 2:
+        #print alphas_t
+        if alphas_t==[]:
             continue
+        #if len(alphas_t[0]) < 2:
+            #continue
         alphas[t] = alphas_t
+        #print t, alphas_t
     return alphas
 
 def get_coefficient_L2R_per_tag(t, test_data, exp_dict_uid, exp_dict_score, act_dict):
@@ -690,7 +694,7 @@ def get_coefficient_L2R_per_tag(t, test_data, exp_dict_uid, exp_dict_score, act_
         return alphas_t
     print 'Tag ',t, '#Q', len(X),'Coefficients', rank_svm.coef_
     
-    alphas_t = list(rank_svm.coef_)
+    alphas_t = rank_svm.coef_
     return alphas_t
 
 def get_score_in_gt(u,gt):
