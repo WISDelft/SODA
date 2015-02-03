@@ -1,0 +1,336 @@
+Connecting to DB: ('PostgreSQL 9.1.13 on x86_64-unknown-linux-gnu, compiled by gcc (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3, 64-bit',)
+nr of experts: 13594, nr of sparrows: 17072
+127818
+0.0  0.0
+0.0  0.0
+19482
+1
+------
+0.143112399703  0.208995728648
+0.227420605489  0.112672967374
+29662
+2
+------
+0.173450465359  0.207426190867
+0.31866248841  0.109726077583
+28401
+3
+------
+0.197347504777  0.202759246133
+0.352827524394  0.0947185332317
+19711
+4
+------
+0.214872320303  0.190761297586
+0.373296290458  0.0878354347977
+12688
+5
+------
+0.226415340264  0.184265933334
+0.386256785353  0.0808802759448
+7246
+6
+------
+0.238952944491  0.167747514583
+0.395836573683  0.0776699400708
+4225
+7
+------
+0.253216062544  0.165619552104
+0.398819148306  0.0745596314965
+2412
+8
+------
+0.254681935428  0.150501925237
+0.405250784587  0.0716292103128
+1401
+9
+------
+0.259057368045  0.137951185512
+0.411528761832  0.0713165902571
+867
+10
+------
+0.270061375845  0.134097227026
+0.41192814515  0.0768018520139
+523
+11
+------
+0.283672385565  0.120238557966
+0.41655993046  0.0705265888308
+317
+12
+------
+0.281035273369  0.114011789221
+0.414123629457  0.0703472239311
+225
+13
+------
+0.284128881149  0.109824785607
+0.418074535504  0.064703739823
+163
+14
+------
+0.264412559567  0.0951448374816
+0.406634776068  0.0809224101165
+97
+15
+------
+0.299405861066  0.101954306988
+0.412021606865  0.0802158149246
+80
+16
+------
+0.295908983222  0.0938727378661
+0.408208268173  0.0667131333085
+67
+17
+------
+0.276629706357  0.0986891736638
+0.424289041917  0.0761671719852
+52
+18
+------
+0.31180123704  0.0936990284563
+0.426508340015  0.0677430173893
+33
+19
+------
+0.270590651412  0.0946294284107
+0.430927509312  0.0599918436868
+35
+20
+------
+0.277056563366  0.0814989948333
+0.412959728213  0.0456539457284
+24
+21
+------
+0.288079901382  0.0894735804083
+0.42470734414  0.0489065552001
+17
+22
+------
+0.286014293129  0.107570280982
+0.389273950687  0.0734995036692
+11
+23
+------
+0.31748471436  0.065813953415
+0.441619170464  0.0830422356627
+10
+24
+------
+0.293951794812  0.0761740125771
+0.429442531153  0.0535349415828
+13
+25
+------
+0.257782718025  0.0847586882393
+0.41583022307  0.0822913494455
+13
+26
+------
+0.328925032489  0.101401999989
+0.424228395062  0.0502458803394
+4
+27
+------
+0.353847789116  0.0413184047784
+0.451943277311  0.0274745622892
+3
+28
+------
+0.358769965667  0.0396579082034
+0.439588464696  0.0364122418206
+4
+29
+------
+0.25  0.0
+0.410526315789  0.0
+1
+30
+------
+0.316104218362  0.0628604849441
+0.404466431734  0.0296727307522
+5
+31
+------
+0.380654761905  0.0351543406196
+0.48393115942  0.029193142183
+3
+32
+------
+0.313915749322  0.0848483193606
+0.456764069264  0.0105079650925
+3
+33
+------
+0.304088680927  0.0571382614718
+0.467822872613  0.0767516914011
+4
+34
+------
+0.290756302521  0.0
+0.435714285714  0.0
+1
+35
+------
+0.312037037037  0.062037037037
+0.466804029304  0.00648656898657
+2
+36
+------
+0.394594594595  0.0
+0.442342342342  0.0
+1
+37
+------
+0.381161236424  0.0428153717627
+0.472368421053  0.0100877192982
+2
+38
+------
+nan  nan
+nan  nan
+0
+39
+------
+nan  nan
+nan  nan
+0
+40
+------
+Connecting to DB: ('PostgreSQL 9.1.13 on x86_64-unknown-linux-gnu, compiled by gcc (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3, 64-bit',)
+nr of experts: 13594, nr of sparrows: 17072
+answered by owl: 130548, answered by sparrow: 475322
+overall both-answered questions: 127818, better by nmrr: 69108, worse by nmrr: 18187
+---
+com done!
+127818
+com_median done!
+127818
+overall questions: 19482, nmrr better: 0, nmrr worse: 0
+1
+------
+overall questions: 29662, nmrr better: 15955, nmrr worse: 6216
+2
+------
+overall questions: 28401, nmrr better: 17137, nmrr worse: 4070
+3
+------
+overall questions: 19711, nmrr better: 13544, nmrr worse: 3329
+4
+------
+overall questions: 12688, nmrr better: 8932, nmrr worse: 1934
+5
+------
+overall questions: 7246, nmrr better: 5322, nmrr worse: 1130
+6
+------
+overall questions: 4225, nmrr better: 3184, nmrr worse: 632
+7
+------
+overall questions: 2412, nmrr better: 1822, nmrr worse: 375
+8
+------
+overall questions: 1401, nmrr better: 1095, nmrr worse: 205
+9
+------
+overall questions: 867, nmrr better: 688, nmrr worse: 106
+10
+------
+overall questions: 523, nmrr better: 423, nmrr worse: 65
+11
+------
+overall questions: 317, nmrr better: 258, nmrr worse: 34
+12
+------
+overall questions: 225, nmrr better: 188, nmrr worse: 23
+13
+------
+overall questions: 163, nmrr better: 138, nmrr worse: 18
+14
+------
+overall questions: 97, nmrr better: 83, nmrr worse: 9
+15
+------
+overall questions: 80, nmrr better: 65, nmrr worse: 11
+16
+------
+overall questions: 67, nmrr better: 52, nmrr worse: 10
+17
+------
+overall questions: 52, nmrr better: 42, nmrr worse: 6
+18
+------
+overall questions: 33, nmrr better: 26, nmrr worse: 6
+19
+------
+overall questions: 35, nmrr better: 33, nmrr worse: 2
+20
+------
+overall questions: 24, nmrr better: 21, nmrr worse: 1
+21
+------
+overall questions: 17, nmrr better: 15, nmrr worse: 1
+22
+------
+overall questions: 11, nmrr better: 9, nmrr worse: 1
+23
+------
+overall questions: 10, nmrr better: 10, nmrr worse: 0
+24
+------
+overall questions: 13, nmrr better: 13, nmrr worse: 0
+25
+------
+overall questions: 13, nmrr better: 11, nmrr worse: 2
+26
+------
+overall questions: 4, nmrr better: 4, nmrr worse: 0
+27
+------
+overall questions: 3, nmrr better: 2, nmrr worse: 1
+28
+------
+overall questions: 4, nmrr better: 4, nmrr worse: 0
+29
+------
+overall questions: 1, nmrr better: 1, nmrr worse: 0
+30
+------
+overall questions: 5, nmrr better: 5, nmrr worse: 0
+31
+------
+overall questions: 3, nmrr better: 3, nmrr worse: 0
+32
+------
+overall questions: 3, nmrr better: 3, nmrr worse: 0
+33
+------
+overall questions: 4, nmrr better: 4, nmrr worse: 0
+34
+------
+overall questions: 1, nmrr better: 1, nmrr worse: 0
+35
+------
+overall questions: 2, nmrr better: 2, nmrr worse: 0
+36
+------
+overall questions: 1, nmrr better: 1, nmrr worse: 0
+37
+------
+overall questions: 2, nmrr better: 2, nmrr worse: 0
+38
+------
+overall questions: 0, nmrr better: 0, nmrr worse: 0
+39
+------
+overall questions: 0, nmrr better: 0, nmrr worse: 0
+40
+------
+data/ansd_pop_median.csv done!
+data/ansd_diff_median.csv done!
+data/post_pop_median.csv done!
+data/post_diff_median.csv done!

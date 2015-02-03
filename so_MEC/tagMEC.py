@@ -16,10 +16,12 @@ from calculate_mec import *
 from compare_performance import *
 from characterize_perference import *
 from get_userAtt import *
+from robustness_component import *
 from util_mec import *
+from get_motivation import *
 
 con = None
-con = psycopg2.connect(database='stackquestionstest', user='postgres', password='021709Yj')
+con = psycopg2.connect(database='stackquestionstest', user='postgres', password='wistudelft')
 cur = con.cursor()
 cur.execute('SELECT version()')
 ver = cur.fetchone()
@@ -74,17 +76,27 @@ if __name__ == '__main__':
     else:        
         experts, answerer_scores = get_MECscores(answers_att, this_answerers, tag)
 
+    
     # get sparrow set and motivating plots
     sparrows = get_sparrows(tag)
     print "nr of experts: "+str(len(experts))+', nr of sparrows: '+str(len(sparrows))
+    
+    
+    gene_question_agg_get_randomUser(tag)
+    sys.exit(1)
+    
     #get_motiv_example(experts, answers_att)                                           # table 2
     if not os.path.exists("data/illustration.csv"):
         get_motiv_scatter(experts, answerer_scores, tag)                             # figure 3
+    sys.exit(1)
+    # analyze robustness of the metric 1. in terms of components, and 2. cross-topic
+    robust_component(answerer_scores, tag)
+    sys.exit(1)
     
     # get basic statistics
-    get_performance(experts, answerer_scores, tag)                              # figure 6
+    get_performance(experts, answerer_scores, sparrows, tag, 'sparrow')                              # figure 6
     
-    # characterize performance
+    # characterize preference
     ansd_qst_properties(experts, sparrows, answerer_scores, tag)
     post_qst_properties(experts, sparrows, answerer_scores, tag)
     

@@ -1,0 +1,514 @@
+Connecting to DB: ('PostgreSQL 9.1.13 on x86_64-unknown-linux-gnu, compiled by gcc (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3, 64-bit',)
+Connecting to DB: ('PostgreSQL 9.1.13 on x86_64-unknown-linux-gnu, compiled by gcc (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3, 64-bit',)
+Connecting to DB: ('PostgreSQL 9.1.13 on x86_64-unknown-linux-gnu, compiled by gcc (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3, 64-bit',)
+Connecting to DB: ('PostgreSQL 9.1.13 on x86_64-unknown-linux-gnu, compiled by gcc (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3, 64-bit',)
+Connecting to DB: ('PostgreSQL 9.1.13 on x86_64-unknown-linux-gnu, compiled by gcc (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3, 64-bit',)
+mean NO.answerers to questions: 2.22011155487
+answered by owl: 130548, answered by TPnrans : 464663
+overall both-answered questions: 127019, better by nmrr: 67522, worse by nmrr: 18510
+---
+com done!
+127019
+com_median done!
+127019
+overall questions: 19231, nmrr better: 0, nmrr worse: 0
+1
+------
+overall questions: 29418, nmrr better: 15336, nmrr worse: 6110
+2
+------
+overall questions: 28212, nmrr better: 16808, nmrr worse: 4212
+3
+------
+overall questions: 19638, nmrr better: 13254, nmrr worse: 3392
+4
+------
+overall questions: 12664, nmrr better: 8829, nmrr worse: 2003
+5
+------
+overall questions: 7235, nmrr better: 5229, nmrr worse: 1179
+6
+------
+overall questions: 4222, nmrr better: 3137, nmrr worse: 653
+7
+------
+overall questions: 2409, nmrr better: 1779, nmrr worse: 398
+8
+------
+overall questions: 1401, nmrr better: 1070, nmrr worse: 228
+9
+------
+overall questions: 866, nmrr better: 675, nmrr worse: 119
+10
+------
+overall questions: 523, nmrr better: 420, nmrr worse: 70
+11
+------
+overall questions: 317, nmrr better: 256, nmrr worse: 40
+12
+------
+overall questions: 225, nmrr better: 181, nmrr worse: 27
+13
+------
+overall questions: 163, nmrr better: 132, nmrr worse: 21
+14
+------
+overall questions: 97, nmrr better: 83, nmrr worse: 13
+15
+------
+overall questions: 80, nmrr better: 65, nmrr worse: 11
+16
+------
+overall questions: 67, nmrr better: 51, nmrr worse: 12
+17
+------
+overall questions: 52, nmrr better: 40, nmrr worse: 5
+18
+------
+overall questions: 33, nmrr better: 27, nmrr worse: 6
+19
+------
+overall questions: 35, nmrr better: 32, nmrr worse: 1
+20
+------
+overall questions: 24, nmrr better: 21, nmrr worse: 2
+21
+------
+overall questions: 17, nmrr better: 15, nmrr worse: 2
+22
+------
+overall questions: 11, nmrr better: 9, nmrr worse: 2
+23
+------
+overall questions: 10, nmrr better: 10, nmrr worse: 0
+24
+------
+overall questions: 13, nmrr better: 12, nmrr worse: 0
+25
+------
+overall questions: 13, nmrr better: 10, nmrr worse: 3
+26
+------
+overall questions: 4, nmrr better: 4, nmrr worse: 0
+27
+------
+overall questions: 3, nmrr better: 2, nmrr worse: 1
+28
+------
+overall questions: 4, nmrr better: 4, nmrr worse: 0
+29
+------
+overall questions: 1, nmrr better: 1, nmrr worse: 0
+30
+------
+overall questions: 5, nmrr better: 5, nmrr worse: 0
+31
+------
+overall questions: 3, nmrr better: 3, nmrr worse: 0
+32
+------
+overall questions: 3, nmrr better: 3, nmrr worse: 0
+33
+------
+overall questions: 4, nmrr better: 4, nmrr worse: 0
+34
+------
+overall questions: 1, nmrr better: 0, nmrr worse: 0
+35
+------
+overall questions: 2, nmrr better: 2, nmrr worse: 0
+36
+------
+overall questions: 1, nmrr better: 1, nmrr worse: 0
+37
+------
+overall questions: 2, nmrr better: 2, nmrr worse: 0
+38
+------
+overall questions: 0, nmrr better: 0, nmrr worse: 0
+39
+------
+overall questions: 0, nmrr better: 0, nmrr worse: 0
+40
+------
+answered by owl: 130548, answered by TPzscore : 438805
+overall both-answered questions: 123555, better by nmrr: 62507, worse by nmrr: 19515
+---
+com done!
+123555
+com_median done!
+123555
+overall questions: 18058, nmrr better: 0, nmrr worse: 0
+1
+------
+overall questions: 28421, nmrr better: 13517, nmrr worse: 5651
+2
+------
+overall questions: 27490, nmrr better: 15756, nmrr worse: 4650
+3
+------
+overall questions: 19334, nmrr better: 12364, nmrr worse: 3597
+4
+------
+overall questions: 12517, nmrr better: 8339, nmrr worse: 2357
+5
+------
+overall questions: 7184, nmrr better: 4994, nmrr worse: 1335
+6
+------
+overall questions: 4192, nmrr better: 2932, nmrr worse: 750
+7
+------
+overall questions: 2391, nmrr better: 1696, nmrr worse: 450
+8
+------
+overall questions: 1388, nmrr better: 980, nmrr worse: 276
+9
+------
+overall questions: 862, nmrr better: 633, nmrr worse: 153
+10
+------
+overall questions: 522, nmrr better: 377, nmrr worse: 95
+11
+------
+overall questions: 316, nmrr better: 231, nmrr worse: 61
+12
+------
+overall questions: 224, nmrr better: 169, nmrr worse: 36
+13
+------
+overall questions: 163, nmrr better: 123, nmrr worse: 32
+14
+------
+overall questions: 96, nmrr better: 79, nmrr worse: 14
+15
+------
+overall questions: 79, nmrr better: 61, nmrr worse: 13
+16
+------
+overall questions: 67, nmrr better: 52, nmrr worse: 13
+17
+------
+overall questions: 52, nmrr better: 42, nmrr worse: 7
+18
+------
+overall questions: 33, nmrr better: 21, nmrr worse: 10
+19
+------
+overall questions: 35, nmrr better: 30, nmrr worse: 3
+20
+------
+overall questions: 24, nmrr better: 20, nmrr worse: 2
+21
+------
+overall questions: 17, nmrr better: 13, nmrr worse: 2
+22
+------
+overall questions: 11, nmrr better: 9, nmrr worse: 1
+23
+------
+overall questions: 10, nmrr better: 10, nmrr worse: 0
+24
+------
+overall questions: 13, nmrr better: 9, nmrr worse: 3
+25
+------
+overall questions: 13, nmrr better: 11, nmrr worse: 2
+26
+------
+overall questions: 4, nmrr better: 4, nmrr worse: 0
+27
+------
+overall questions: 3, nmrr better: 2, nmrr worse: 0
+28
+------
+overall questions: 4, nmrr better: 4, nmrr worse: 0
+29
+------
+overall questions: 1, nmrr better: 1, nmrr worse: 0
+30
+------
+overall questions: 5, nmrr better: 4, nmrr worse: 1
+31
+------
+overall questions: 3, nmrr better: 3, nmrr worse: 0
+32
+------
+overall questions: 3, nmrr better: 3, nmrr worse: 0
+33
+------
+overall questions: 4, nmrr better: 4, nmrr worse: 0
+34
+------
+overall questions: 1, nmrr better: 0, nmrr worse: 0
+35
+------
+overall questions: 2, nmrr better: 2, nmrr worse: 0
+36
+------
+overall questions: 1, nmrr better: 1, nmrr worse: 0
+37
+------
+overall questions: 2, nmrr better: 1, nmrr worse: 1
+38
+------
+overall questions: 0, nmrr better: 0, nmrr worse: 0
+39
+------
+overall questions: 0, nmrr better: 0, nmrr worse: 0
+40
+------
+answered by owl: 130548, answered by TPreputation : 396739
+overall both-answered questions: 125413, better by nmrr: 58299, worse by nmrr: 19339
+---
+com done!
+125413
+com_median done!
+125413
+overall questions: 19208, nmrr better: 0, nmrr worse: 0
+1
+------
+overall questions: 28969, nmrr better: 11782, nmrr worse: 5405
+2
+------
+overall questions: 27581, nmrr better: 14630, nmrr worse: 4700
+3
+------
+overall questions: 19361, nmrr better: 11592, nmrr worse: 3613
+4
+------
+overall questions: 12520, nmrr better: 7997, nmrr worse: 2391
+5
+------
+overall questions: 7188, nmrr better: 4770, nmrr worse: 1362
+6
+------
+overall questions: 4200, nmrr better: 2900, nmrr worse: 745
+7
+------
+overall questions: 2404, nmrr better: 1672, nmrr worse: 467
+8
+------
+overall questions: 1399, nmrr better: 1014, nmrr worse: 229
+9
+------
+overall questions: 862, nmrr better: 637, nmrr worse: 148
+10
+------
+overall questions: 522, nmrr better: 382, nmrr worse: 92
+11
+------
+overall questions: 317, nmrr better: 242, nmrr worse: 49
+12
+------
+overall questions: 225, nmrr better: 168, nmrr worse: 31
+13
+------
+overall questions: 163, nmrr better: 127, nmrr worse: 30
+14
+------
+overall questions: 97, nmrr better: 77, nmrr worse: 13
+15
+------
+overall questions: 79, nmrr better: 57, nmrr worse: 15
+16
+------
+overall questions: 67, nmrr better: 52, nmrr worse: 12
+17
+------
+overall questions: 52, nmrr better: 40, nmrr worse: 9
+18
+------
+overall questions: 33, nmrr better: 23, nmrr worse: 7
+19
+------
+overall questions: 35, nmrr better: 29, nmrr worse: 4
+20
+------
+overall questions: 24, nmrr better: 20, nmrr worse: 3
+21
+------
+overall questions: 17, nmrr better: 13, nmrr worse: 2
+22
+------
+overall questions: 11, nmrr better: 9, nmrr worse: 1
+23
+------
+overall questions: 10, nmrr better: 9, nmrr worse: 0
+24
+------
+overall questions: 13, nmrr better: 12, nmrr worse: 1
+25
+------
+overall questions: 13, nmrr better: 9, nmrr worse: 4
+26
+------
+overall questions: 4, nmrr better: 3, nmrr worse: 1
+27
+------
+overall questions: 3, nmrr better: 2, nmrr worse: 1
+28
+------
+overall questions: 4, nmrr better: 3, nmrr worse: 1
+29
+------
+overall questions: 1, nmrr better: 1, nmrr worse: 0
+30
+------
+overall questions: 5, nmrr better: 4, nmrr worse: 1
+31
+------
+overall questions: 3, nmrr better: 2, nmrr worse: 0
+32
+------
+overall questions: 3, nmrr better: 3, nmrr worse: 0
+33
+------
+overall questions: 4, nmrr better: 4, nmrr worse: 0
+34
+------
+overall questions: 1, nmrr better: 1, nmrr worse: 0
+35
+------
+overall questions: 2, nmrr better: 1, nmrr worse: 1
+36
+------
+overall questions: 1, nmrr better: 1, nmrr worse: 0
+37
+------
+overall questions: 2, nmrr better: 1, nmrr worse: 1
+38
+------
+overall questions: 0, nmrr better: 0, nmrr worse: 0
+39
+------
+overall questions: 0, nmrr better: 0, nmrr worse: 0
+40
+------
+answered by owl: 130548, answered by TPlogMEC : 48285
+overall both-answered questions: 48269, better by nmrr: 4921, worse by nmrr: 11510
+---
+com done!
+48269
+com_median done!
+48269
+overall questions: 5168, nmrr better: 0, nmrr worse: 0
+1
+------
+overall questions: 8814, nmrr better: 482, nmrr worse: 1049
+2
+------
+overall questions: 11230, nmrr better: 865, nmrr worse: 2022
+3
+------
+overall questions: 7935, nmrr better: 885, nmrr worse: 2107
+4
+------
+overall questions: 5690, nmrr better: 870, nmrr worse: 1788
+5
+------
+overall questions: 3386, nmrr better: 558, nmrr worse: 1322
+6
+------
+overall questions: 2124, nmrr better: 390, nmrr worse: 1002
+7
+------
+overall questions: 1310, nmrr better: 270, nmrr worse: 657
+8
+------
+overall questions: 785, nmrr better: 180, nmrr worse: 427
+9
+------
+overall questions: 559, nmrr better: 134, nmrr worse: 314
+10
+------
+overall questions: 348, nmrr better: 79, nmrr worse: 203
+11
+------
+overall questions: 232, nmrr better: 55, nmrr worse: 147
+12
+------
+overall questions: 169, nmrr better: 30, nmrr worse: 114
+13
+------
+overall questions: 120, nmrr better: 31, nmrr worse: 75
+14
+------
+overall questions: 66, nmrr better: 14, nmrr worse: 47
+15
+------
+overall questions: 64, nmrr better: 12, nmrr worse: 49
+16
+------
+overall questions: 54, nmrr better: 12, nmrr worse: 37
+17
+------
+overall questions: 45, nmrr better: 13, nmrr worse: 30
+18
+------
+overall questions: 29, nmrr better: 4, nmrr worse: 24
+19
+------
+overall questions: 30, nmrr better: 6, nmrr worse: 22
+20
+------
+overall questions: 18, nmrr better: 6, nmrr worse: 11
+21
+------
+overall questions: 14, nmrr better: 3, nmrr worse: 10
+22
+------
+overall questions: 8, nmrr better: 3, nmrr worse: 5
+23
+------
+overall questions: 9, nmrr better: 4, nmrr worse: 5
+24
+------
+overall questions: 12, nmrr better: 4, nmrr worse: 7
+25
+------
+overall questions: 10, nmrr better: 2, nmrr worse: 7
+26
+------
+overall questions: 3, nmrr better: 1, nmrr worse: 2
+27
+------
+overall questions: 3, nmrr better: 2, nmrr worse: 1
+28
+------
+overall questions: 4, nmrr better: 1, nmrr worse: 3
+29
+------
+overall questions: 1, nmrr better: 0, nmrr worse: 1
+30
+------
+overall questions: 4, nmrr better: 1, nmrr worse: 3
+31
+------
+overall questions: 3, nmrr better: 0, nmrr worse: 3
+32
+------
+overall questions: 3, nmrr better: 0, nmrr worse: 2
+33
+------
+overall questions: 4, nmrr better: 1, nmrr worse: 3
+34
+------
+overall questions: 1, nmrr better: 0, nmrr worse: 1
+35
+------
+overall questions: 2, nmrr better: 0, nmrr worse: 2
+36
+------
+overall questions: 1, nmrr better: 0, nmrr worse: 1
+37
+------
+overall questions: 2, nmrr better: 1, nmrr worse: 1
+38
+------
+overall questions: 0, nmrr better: 0, nmrr worse: 0
+39
+------
+overall questions: 0, nmrr better: 0, nmrr worse: 0
+40
+------

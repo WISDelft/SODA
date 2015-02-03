@@ -9,7 +9,7 @@ import os
 from util_mec import *
 
 con = None
-con = psycopg2.connect(database='stackquestionstest', user='postgres', password='021709Yj')
+con = psycopg2.connect(database='stackquestionstest', user='postgres', password='wistudelft')
 cur = con.cursor()
 
 def get_motiv_example(experts, answers_att):
@@ -70,7 +70,7 @@ def get_motiv_example(experts, answers_att):
 def get_motiv_scatter(experts, answerer_scores, tag):
     userranklists = loadfile("userranklists_"+tag)
     sparrows = loadfile("sparrows_"+tag)
-    
+    output_noAgg = open("data/illustration_noAgg.csv", 'w')
     debate = dict([])
     debate_eu = dict([])
     debate_s = dict([])
@@ -95,12 +95,15 @@ def get_motiv_scatter(experts, answerer_scores, tag):
                     debate_eu[u]=[len(urank)]
                     rank_eu[u] = [i+1]
             if u in sparrows:
+                output_noAgg.write("sparrow, "+str(len(urank)+0.5 * np.random.randn())+", "+str(1-float(i)/len(urank)+0.04 * np.random.randn())+"\n")
                 if debate_s.has_key(u):
                     debate_s[u].append(len(urank))
                     rank_s[u].append(i+1)
                 else:
                     debate_s[u]=[len(urank)]
                     rank_s[u] = [i+1]
+            else:
+                output_noAgg.write("other, "+str(len(urank)+0.5 * np.random.randn())+", "+str(1-float(i)/len(urank)+0.04 * np.random.randn())+"\n")
 
     debate_medium = []
     debate_medium_eu = []
@@ -111,6 +114,8 @@ def get_motiv_scatter(experts, answerer_scores, tag):
             debate_medium_eu.append( numpy.median(debate_eu[u]))
         if u in sparrows:
             debate_medium_s.append(numpy.median(debate_s[u]))
+            
+    
     qd = [] # question debatableness
     aq = [] # answer quality
     qd_s = []
@@ -136,27 +141,28 @@ def get_motiv_scatter(experts, answerer_scores, tag):
             if len(r) != 0:
                 #leni.append(i+0.5 * np.random.randn())
                 #rri.append(numpy.mean(r)+0.05 * np.random.randn())
-                leni.append(i)
-                rri.append(numpy.mean(r))
-        a = numpy.mean(leni)
+                leni.append(i+1)
+                rri.append(numpy.median(r))
+        a = numpy.median(leni)
         if math.isnan(a):
             continue
         #qd_all.append(int(round(a)))
         qd_all.append(a)
-        aq_all.append(1-numpy.mean(rri))
+        aq_all.append(1-numpy.median(rri))
         if u in sparrows:
-            qd_s.append(numpy.mean(leni)+0.5 * np.random.randn())#
-            aq_s.append(1-numpy.mean(rri)+0.04 * np.random.randn())#
+            qd_s.append(numpy.median(leni)+0.5 * np.random.randn())#
+            aq_s.append(1-numpy.median(rri)+0.04 * np.random.randn())#
         else:
-            qd.append(numpy.mean(leni)+0.5 * np.random.randn())
-            aq.append(1-numpy.mean(rri)+0.04 * np.random.randn())
+            qd.append(numpy.median(leni)+0.5 * np.random.randn())
+            aq.append(1-numpy.median(rri)+0.04 * np.random.randn())
         if u in experts:
-            qd_o.append(numpy.mean(leni)+0.5 * np.random.randn())
-            aq_o.append(1-numpy.mean(rri)+0.04 * np.random.randn())
+            qd_o.append(numpy.median(leni)+0.5 * np.random.randn())
+            aq_o.append(1-numpy.median(rri)+0.04 * np.random.randn())
             exs.append(u)
-        if numpy.mean(leni)>3.0 and numpy.mean(rri)<0.37:
+        if numpy.median(leni)>3.0 and numpy.median(rri)<0.37:
             ideals.append(u)
 
+    output_noAgg.close()
     output = open("data/illustration.csv", 'w')
 
     for k in range(len(qd_s)):
@@ -180,9 +186,9 @@ def get_motiv_scatter(experts, answerer_scores, tag):
         if s!=None:
             st1 += s
 
-    st1 = numpy.mean(qd_all)
+    st1 = numpy.median(qd_all)
     print 'qlen:'+str(st1)+ ' median: '+str(numpy.median(qd_all))+' std:'+str(numpy.std(qd_all))
-    st2 = numpy.mean(aq_all)
+    st2 = numpy.median(aq_all)
     print 'aq:'+str(st2)+ ' median: '+str(numpy.median(aq_all))+' std:'+str(numpy.std(aq_all))
 
 
@@ -202,18 +208,17 @@ def get_nrqst(answerer_scores,tag):
     dumpfile(nrqst, "nrqst_"+tag)
     return nrqst
     
-def get_performance(experts, answerer_scores, tag):
+def get_performance(experts, answerer_scores, ua, tag, name):
     userranklists = loadfile("userranklists_"+tag)
     nrans = loadfile('nrans_'+tag)
-    if os.path.exists("temp_files/nrans_"+tag+"pik"):
+    if os.path.exists("temp_files/nrans_"+tag+".pik"):
         nrqst = loadfile("nrqst_"+tag)
     else:
         nrqst = get_nrqst(answerer_scores,tag)
         
-    ua = loadfile("sparrows_"+tag)
     exs = experts
     
-    output = open("data/nr_ans_qst.csv", 'w')
+    output = open("data/nr_ans_qst_"+name+".csv", 'w')
 
     sa = []
     sb = []
@@ -224,7 +229,7 @@ def get_performance(experts, answerer_scores, tag):
     for u in ua:
         sa.append(nrans[u])
         sb.append(nrqst[u])
-        output.write("sparrow, "+str(nrans[u])+", "+str(nrqst[u])+"\n")
+        output.write(name+","+str(nrans[u])+", "+str(nrqst[u])+"\n")
     for u in exs:
         output.write("owl, "+str(nrans[u])+", "+str(nrqst[u])+"\n")
     for u in answerer_scores:
@@ -271,17 +276,17 @@ def get_performance(experts, answerer_scores, tag):
             debate_medium_eu.append( numpy.median(debate_eu[u]))
         if u in ua:
             debate_medium_s.append(numpy.median(debate_s[u]))
-    output = open("data/qst_deb.csv", 'w')
+    output = open("data/qst_deb_"+name+".csv", 'w')
 
     for u in ua:
-        output.write("sparrow, "+str(round(numpy.median(debate_s[u]), 2))+"\n")
+        output.write(name+","+str(round(numpy.median(debate_s[u]), 2))+"\n")
     for u in exs:
         output.write("owl, "+str(round(numpy.median(debate_eu[u]), 2))+"\n")
     for u in answerer_scores:
         output.write("overall, "+str(round(numpy.median(debate[u]), 2))+"\n")
     output.close()
     ################################################################################################################
-    if os.path.exists("temp_files/com_"+tag+".pik"):
+    if os.path.exists("temp_files/com_"+name+"_"+tag+".pik"):
         comlook(tag)
         return
     qlen = []
@@ -292,10 +297,16 @@ def get_performance(experts, answerer_scores, tag):
     showup = 0
     showup_nmrr = 0
     showup_ans = 0
+    nmrr_better = 0
+    nmrr_worse = 0
     com = []
+    com_median = []
     com_nmrr = []
     com_ans = []
     com_or = []
+    com_nmrr_median = []
+    com_ans_median = []
+    com_or_median = []
     for urank in userranklists:
         pos_nmrr = []
         pos_repu = []
@@ -313,46 +324,78 @@ def get_performance(experts, answerer_scores, tag):
                 u_repu.append(u)
         if len(pos_nmrr)!=0:
             showup_nmrr += 1
-            com_nmrr.append(float(numpy.mean(pos_nmrr))/len(urank))
+            #com_nmrr.append(float(numpy.mean(pos_nmrr))/len(urank))
+            #com_nmrr_median.append(float(numpy.median(pos_nmrr))/len(urank))
         if len(pos_repu)!=0:
             showup_ans += 1
-            com_ans.append(float(numpy.mean(pos_repu))/len(urank))
-        if len(pos_nmrr)!=0 or len(pos_repu)!=0:
-            com_or.append(float(numpy.mean(list(set(exs) | set(ua))))/len(urank))
+            #com_ans.append(float(numpy.mean(pos_repu))/len(urank))
+            #com_ans_median.append(float(numpy.median(pos_repu))/len(urank))
+        #if len(pos_nmrr)!=0 or len(pos_repu)!=0:
+            #com_or.append(float(numpy.mean(list(set(exs) | set(ua))))/len(urank))
+            #com_or_median.append(float(numpy.median(list(set(exs) | set(ua))))/len(urank))
         if len(pos_nmrr)!=0 and len(pos_repu)!=0:
-            '''if pos_nmrr[0]<pos_repu[0]:
-                print '---'
-                print urank
-                print pos_nmrr
-                print pos_repu'''
             showup += 1
             c = [numpy.mean(pos_nmrr), numpy.mean(pos_repu), len(urank)]
-            #print c
             com.append(c)
-    print "answered by owl: "+str(showup_nmrr)+" answered by sparrow: "+str(showup_ans)
-    print showup_nmrr+showup_ans-showup
+            c_median = [numpy.median(pos_nmrr), numpy.median(pos_repu), len(urank)]
+            com_median.append(c_median)
+            if numpy.median(pos_nmrr)<numpy.median(pos_repu):
+                nmrr_better+=1
+            if numpy.median(pos_nmrr)>numpy.median(pos_repu):
+                nmrr_worse+=1
+    print "answered by owl: "+str(showup_nmrr)+", answered by "+name+" : "+str(showup_ans)
+    print 'overall both-answered questions: '+str(showup)+', better by nmrr: '+str(nmrr_better)+', worse by nmrr: '+str(nmrr_worse)
     print "---"
-    print numpy.mean(com_nmrr)
-    print numpy.mean(com_ans)
-    print numpy.mean(com_or)
-                
-                
-    '''if pos_nmrr!=-1 and pos_repu!=-1:
-            output.write(str(pos_nmrr)+","+str(pos_repu)+","+str(u_nmrr)+","+str(u_repu)+","+str(len(urank))+"\n")
-        if (pos_nmrr!=-1 and pos_repu==-1) or (pos_nmrr!=-1 and pos_nmrr!=pos_repu):
-            output2.write(str(pos_nmrr)+","+str(u_nmrr)+","+str(len(urank))+"\n")
-        if (pos_nmrr==-1 and pos_repu!=-1) or (pos_repu!=-1 and pos_nmrr!=pos_repu):
-            output3.write(str(pos_repu)+","+str(u_repu)+","+str(len(urank))+"\n")'''
-    '''for c in com:
-        print com'''
 
-    dumpfile(com, "com_"+tag)
+    dumpfile(com, "com_"+name+"_"+tag)
     print 'com done!'
-    comlook(tag)
+    comlook(name+'_'+tag, name)
+    dumpfile(com_median, "com_median_"+name+"_"+tag)
+    print 'com_median done!'
+    comlook_median(name+'_'+tag, name)
 #savehist(userset)
 
-def comlook(tag):
-    com = loadfile("com_"+tag)
+def comlook_median(filename, name):
+    com = loadfile("com_median_"+filename)
+    print len(com)
+    index = []
+    nmrrs_mean = []
+    nmrrs_std = []
+    repus_mean = []
+    repus_std = []
+    for i in range(40):
+        better = 0
+        worse = 0
+        index.append(i+1)
+        nmrrs = []
+        repus = []
+        for j in range(len(com)):
+            c = com[j]
+            if c[2] == i+1:
+                nmrrs.append(float(c[0])/c[2])
+                repus.append(float(c[1])/c[2])
+                if c[0]<c[1]:
+                    better+=1
+                if c[0]>c[1]:
+                    worse+=1
+        
+        #print str(numpy.median(nmrrs))+"  "+str(numpy.std(nmrrs))
+        #print str(numpy.median(repus))+"  "+str(numpy.std(repus))
+        
+        nmrrs_mean.append(1-numpy.median(nmrrs))
+        nmrrs_std.append(numpy.std(nmrrs))
+        repus_mean.append(1-numpy.median(repus))
+        repus_std.append(numpy.std(repus))
+        print 'overall questions: '+str(len(nmrrs))+', nmrr better: '+str(better)+', nmrr worse: '+str(worse)
+        print i+1
+        print '------'
+    output = open("data/ans_quality_median_"+name+".csv", 'w')
+    for i in index:
+        output.write(str(i)+", "+str(nmrrs_mean[i-1])+", "+str(repus_mean[i-1])+"\n")
+    output.close()
+
+def comlook(filename, name):
+    com = loadfile("com_"+filename)
     print len(com)
     index = []
     nmrrs_mean = []
@@ -369,18 +412,18 @@ def comlook(tag):
                 nmrrs.append(float(c[0])/c[2])
                 repus.append(float(c[1])/c[2])
         
-        print str(numpy.mean(nmrrs))+"  "+str(numpy.std(nmrrs))
-        print str(numpy.mean(repus))+"  "+str(numpy.std(repus))
+        #print str(numpy.mean(nmrrs))+"  "+str(numpy.std(nmrrs))
+        #print str(numpy.mean(repus))+"  "+str(numpy.std(repus))
         
         nmrrs_mean.append(1-numpy.mean(nmrrs))
         nmrrs_std.append(numpy.std(nmrrs))
         repus_mean.append(1-numpy.mean(repus))
         repus_std.append(numpy.std(repus))
-        print len(nmrrs)
-        print i+1
-        print '------'
-    output = open("data/ans_quality.csv", 'w')
+        #print len(nmrrs)
+        #print i+1
+        #print '------'
+    output = open("data/ans_quality_"+name+".csv", 'w')
     for i in index:
-        output.write(str(i-1)+", "+str(nmrrs_mean[i-1])+", "+str(repus_mean[i-1])+"\n")
+        output.write(str(i)+", "+str(nmrrs_mean[i-1])+", "+str(repus_mean[i-1])+"\n")
     output.close()
 
